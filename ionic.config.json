@@ -1,0 +1,7 @@
+{
+  "name": "viglo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
