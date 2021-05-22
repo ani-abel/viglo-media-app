@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">viglo</string>
+    <string name="title_activity_main">viglo</string>
+    <string name="package_name">com.viglo.app</string>
+    <string name="custom_url_scheme">com.viglo.app</string>
+</resources>

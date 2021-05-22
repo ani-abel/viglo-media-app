@@ -1,5 +1,5 @@
 {
-	"appId": "io.ionic.starter",
+	"appId": "com.viglo.app",
 	"appName": "viglo",
 	"webDir": "www",
 	"bundledWebRuntime": false

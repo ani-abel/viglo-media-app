@@ -1,20 +1,68 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="modal-section" [ngClass]="{ 'hidden-visually': !ref.isOpen }">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-header-widget">
+                <h4 class="text-white hidden-sm-down">Join Call</h4>
+            </div>
+            <div class="modal-header-widget text-right">
+                <button class="nav-cancel-button btn-no-border cursor-pointer close-modal" 
+                  (click)="ref.isOpen = false">
+                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-close" height="48px" version="1.1" viewBox="0 0 47 48" width="47px" xmlns="http://www.w3.org/2000/svg">
+                        <defs></defs>
+                        <g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
+                        <g fill="#fff" id="Search---Default" transform="translate(-1313.000000, -80.000000)">
+                            <g id="Modal">
+                            <g id="Close-icon" transform="translate(1313.000000, 80.000000)">
+                                <path d="M23.6666667,22.5857864 L1.74635645,0.665476221 L0.332142888,2.07968978 L22.2524531,24 L0.332142888,45.9203102 L1.74635645,47.3345238 L23.6666667,25.4142136 L45.5869769,47.3345238 L47.0011904,45.9203102 L25.0808802,24 L47.0011904,2.07968978 L45.5869769,0.665476221 L23.6666667,22.5857864 Z" id="close-icon"></path>
+                            </g>
+                            </g>
+                        </g>
+                        </g>
+                    </svg>
+            </button>
+            </div>
+        </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+        <div class="modal-content">
+            <form [formGroup]="joinCallForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="call-link" class="text-bold">Enter Call Link*</label>
+                    <input id="call-link" 
+                        [formControlName]="'CallId'" 
+                        type="text" 
+                        class="form-control" />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-danger text-white" [disabled]="joinCallForm.invalid">
+                        Join
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<main>
+   <h1 class="text-center">
+       VIGLO
+   </h1>
+   
+   <section class="page-content">
+       <div class="button-container">
+            <a [routerLink]="['/call']" class="btn btn-primary btn-block text-decoration-none text-white">
+                Start Call
+            </a>
+       </div>
+       <div class="button-container">
+            <button 
+              class="btn btn-danger btn-block text-decoration-none text-white open-modal" 
+              appModalToggle 
+              #ref="appModalToggle">
+                Join call
+            </button>
+       </div>
+   </section>
+</main>
 </ion-content>

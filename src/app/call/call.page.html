@@ -1,0 +1,117 @@
+<ion-content>
+  <div class="modal-section" [ngClass]="{ 'hidden-visually': !ref.isOpen }">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-header-widget">
+                    <h4 class="text-white hidden-sm-down">Call Invite</h4>
+                </div>
+                <div class="modal-header-widget text-right">
+                    <button class="nav-cancel-button btn-no-border cursor-pointer close-modal"
+                    (click)="ref.isOpen = false">
+                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-close" height="48px" version="1.1" viewBox="0 0 47 48" width="47px" xmlns="http://www.w3.org/2000/svg">
+                            <defs></defs>
+                            <g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
+                            <g fill="#fff" id="Search---Default" transform="translate(-1313.000000, -80.000000)">
+                                <g id="Modal">
+                                <g id="Close-icon" transform="translate(1313.000000, 80.000000)">
+                                    <path d="M23.6666667,22.5857864 L1.74635645,0.665476221 L0.332142888,2.07968978 L22.2524531,24 L0.332142888,45.9203102 L1.74635645,47.3345238 L23.6666667,25.4142136 L45.5869769,47.3345238 L47.0011904,45.9203102 L25.0808802,24 L47.0011904,2.07968978 L45.5869769,0.665476221 L23.6666667,22.5857864 Z" id="close-icon"></path>
+                                </g>
+                                </g>
+                            </g>
+                            </g>
+                        </svg>
+                </button>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <form>
+                    <div class="form-group">
+                        <label for="call-link" class="text-bold">Copy Call Link*</label>
+                        <input id="call-link" type="text" class="form-control" #callInvite />
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-danger text-white">
+                            Copy
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <nav class="back-button-area">
+            <button class="btn-rounded btn-primary text-white text-center" (click)="onNavigate()">
+                <!-- <ion-icon name="arrow-round-back"></ion-icon> -->
+                <i class="fa fa-arrow-left"></i>
+            </button>
+        </nav>
+        <div class="overlay-video">
+            <video autoplay #userVideo></video>
+        </div>
+        <video #guestVideo autoplay></video>
+
+        <footer class="bottom-bar">
+            <div class="button control">
+                <button class="btn-rounded btn-danger text-white cursor-pointer text-center tooltip"
+                    (click)="toggleMuteLocalStream()">
+                    <!-- <ion-icon name="mic"></ion-icon> -->
+                    <span class="tooltiptext">
+                        <i class="fa" [ngClass]="{ 
+                            'fa-microphone-slash': !isMuted, 
+                            'fa-microphone': isMuted 
+                        }"></i>&nbsp;
+                        Audio
+                    </span>
+                    <i class="fa" 
+                        [ngClass]="{ 
+                            'fa-microphone-slash': !isMuted, 
+                            'fa-microphone': isMuted 
+                        }"></i>
+                </button>
+            </div>
+            <div class="button control text-center">
+                <button class="btn-rounded btn-primary text-white cursor-pointer text-center tooltip"
+                    (click)="toggleHideVideoStream()">
+                    <!-- <ion-icon name="videocam"></ion-icon> -->
+                    <span class="tooltiptext">
+                        <i class="fa" [ngClass]="{ 
+                            'fa-play': !isBlinded, 
+                            'fa-stop': isBlinded 
+                        }"></i>&nbsp;
+                        Video
+                    </span>
+                    <i class="fa"
+                        [ngClass]="{ 
+                            'fa-play': !isBlinded, 
+                            'fa-stop': isBlinded 
+                        }"></i>
+                </button>
+            </div>
+            <div class="button control text-right">
+                <button class="btn-rounded btn-danger text-white text-center cursor-pointer open-modal tooltip"
+                    appModalToggle 
+                    #ref="appModalToggle">
+                    <span class="tooltiptext">
+                        <i class="fa fa-envelope-open-o"></i>&nbsp;
+                        Copy Invite
+                    </span>
+                    <i class="fa fa-envelope-open-o"></i>
+                </button>
+            </div>
+            <div class="button control text-right">
+                
+                <button class="btn-rounded btn-primary text-white text-center cursor-pointer tooltip"
+                    (click)="onEndCall()"
+                    [ngClass]="{ 'btn-disabled': callInviteId }">
+                    <span class="tooltiptext">
+                        <i class="fa fa-power-off"></i>&nbsp;
+                        End Call
+                    </span>
+                    <i class="fa fa-power-off"></i>
+                </button>
+            </div>
+        </footer>
+    </main>
+</ion-content>

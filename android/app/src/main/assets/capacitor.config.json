@@ -1,0 +1,6 @@
+{
+	"appId": "com.viglo.app",
+	"appName": "viglo",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
