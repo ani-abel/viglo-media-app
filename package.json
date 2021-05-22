@@ -24,6 +24,7 @@
     "@angular/router": "~11.2.0",
     "@capacitor/android": "3.0.0",
     "@capacitor/app": "1.0.0",
+    "@capacitor/clipboard": "^1.0.0",
     "@capacitor/core": "3.0.0",
     "@capacitor/electron": "2.4.7",
     "@capacitor/haptics": "1.0.0",

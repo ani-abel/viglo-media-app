@@ -26,6 +26,6 @@ export class HttpService {
   }
 
   getDocument(name: string): any {
-    return this.firestore.collection(name).doc();
+    return this.firestore.collection(name);
   }
 }

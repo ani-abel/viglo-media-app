@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HomePage implements OnInit {
   joinCallForm: FormGroup;
+  isApp: boolean;
 
   constructor(
     private readonly router: Router,

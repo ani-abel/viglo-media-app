@@ -7,12 +7,13 @@ import {
   OnDestroy,
   NgZone,
 } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+import { Clipboard } from '@capacitor/clipboard';
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpService } from '../modules/shared/services/http.service';
-import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-call',
@@ -23,6 +24,7 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('userVideo', { read: ElementRef }) userVideoEl: ElementRef;
   @ViewChild('guestVideo', { read: ElementRef }) guestVideoEl: ElementRef;
   @ViewChild('callInvite', { read: ElementRef }) callInviteEl: ElementRef;
+  @ViewChild('callUrlInvite', { read: ElementRef }) callUrlInviteEl: ElementRef;
   private servers;
   private pc;
   private localStream;
@@ -107,6 +109,9 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
     const answerCandidates = callDoc.collection('answerCandidates');
     // Set id to input fields
     (this.callInviteEl.nativeElement as HTMLInputElement).value = callDoc.id;
+    if (this.callUrlInviteEl?.nativeElement) {
+      (this.callUrlInviteEl?.nativeElement as HTMLInputElement).value = `${window.location.href}?callId=${callDoc.id}`;
+    }
 
     // Get candidates for caller, save to db
     this.pc.onicecandidate = (event) => {
@@ -151,7 +156,11 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
       event.candidate && answerCandidates.add(event.candidate.toJSON());
     };
     const callData = (await callDoc.get()).data();
+
     (this.callInviteEl.nativeElement as HTMLInputElement).value = callDoc.id;
+    if (this.callUrlInviteEl?.nativeElement) {
+      (this.callUrlInviteEl?.nativeElement as HTMLInputElement).value = `${window.location.href}?callId=${callDoc.id}`;
+    }
   
     const offerDescription = callData.offer;
     await this.pc.setRemoteDescription(new RTCSessionDescription(offerDescription));
@@ -185,12 +194,7 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
       buttons: [{
         text: 'Ok',
         handler: (e) => {
-          this.pc.close();
-          this.router.navigate(['/']);
-          // Turn off all webrtc streams
-          (this.localStream.getVideoTracks() as any[]).forEach((stream) => {
-            stream.stop();
-          });
+          this.closeCall();
         }
       }],
     });
@@ -199,6 +203,13 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
 
   async onEndCall(): Promise<void> {
     await this.endCall('Confirm', 'End call?');
+  }
+
+  copyToClipBoard(textInputEl: HTMLInputElement): void {
+    Clipboard.write({
+      string: textInputEl.value
+    });
+    textInputEl.select();
   }
 
   toggleMuteLocalStream(): void {
@@ -220,8 +231,22 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  onNavigate(): void {
+  private closeCall(): void {
+    this.pc.close();
+    // Turn off all webrtc streams
+    (this.localStream.getVideoTracks() as any[]).forEach((stream) => {
+      stream.stop();
+    });
     this.router.navigate(['/']);
+  }
+
+  onNavigate(): void {
+    this.closeCall();
+  }
+
+  isAppMode(): boolean {
+    const url = (document.URL as string);
+    return (!url.startsWith('http') || url.startsWith('http://localhost:8080'));
   }
 
   async ngOnDestroy(): Promise<void> {
