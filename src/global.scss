@@ -343,6 +343,8 @@ form {
 
     .form-control {
         height: 35px;
+        --font-size: 18px;
+        font-size: var(--font-size);
     }
 }
 

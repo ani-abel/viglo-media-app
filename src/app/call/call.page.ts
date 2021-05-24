@@ -38,7 +38,7 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly _ngZone: NgZone,
-    public alertController: AlertController,
+    private readonly alertController: AlertController,
     private readonly httpSrv: HttpService,
   ) { 
     this.servers = {
@@ -66,7 +66,7 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private async initLocalStream(): Promise<void> {
-    this.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+    this.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
     this.remoteStream = new MediaStream();
 
     // Push tracks from local stream to peer connection

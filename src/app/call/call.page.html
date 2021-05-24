@@ -1,58 +1,58 @@
 <ion-content>
-  <div class="modal-section" [ngClass]="{ 'hidden-visually': !ref.isOpen }">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-header-widget">
-                    <h4 class="text-white hidden-sm-down">Call Invite</h4>
-                </div>
-                <div class="modal-header-widget text-right">
-                    <button class="nav-cancel-button btn-no-border cursor-pointer close-modal"
-                    (click)="ref.isOpen = false">
-                        <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-close" height="48px" version="1.1" viewBox="0 0 47 48" width="47px" xmlns="http://www.w3.org/2000/svg">
-                            <defs></defs>
-                            <g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
-                            <g fill="#fff" id="Search---Default" transform="translate(-1313.000000, -80.000000)">
-                                <g id="Modal">
-                                <g id="Close-icon" transform="translate(1313.000000, 80.000000)">
-                                    <path d="M23.6666667,22.5857864 L1.74635645,0.665476221 L0.332142888,2.07968978 L22.2524531,24 L0.332142888,45.9203102 L1.74635645,47.3345238 L23.6666667,25.4142136 L45.5869769,47.3345238 L47.0011904,45.9203102 L25.0808802,24 L47.0011904,2.07968978 L45.5869769,0.665476221 L23.6666667,22.5857864 Z" id="close-icon"></path>
+    <div class="modal-section" [ngClass]="{ 'hidden-visually': !ref.isOpen }">
+            <div class="modal">
+                <div class="modal-header">
+                    <div class="modal-header-widget">
+                        <h4 class="text-white hidden-sm-down">Call Invite</h4>
+                    </div>
+                    <div class="modal-header-widget text-right">
+                        <button class="nav-cancel-button btn-no-border cursor-pointer close-modal"
+                        (click)="ref.isOpen = false">
+                            <svg xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-close" height="48px" version="1.1" viewBox="0 0 47 48" width="47px" xmlns="http://www.w3.org/2000/svg">
+                                <defs></defs>
+                                <g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
+                                <g fill="#fff" id="Search---Default" transform="translate(-1313.000000, -80.000000)">
+                                    <g id="Modal">
+                                    <g id="Close-icon" transform="translate(1313.000000, 80.000000)">
+                                        <path d="M23.6666667,22.5857864 L1.74635645,0.665476221 L0.332142888,2.07968978 L22.2524531,24 L0.332142888,45.9203102 L1.74635645,47.3345238 L23.6666667,25.4142136 L45.5869769,47.3345238 L47.0011904,45.9203102 L25.0808802,24 L47.0011904,2.07968978 L45.5869769,0.665476221 L23.6666667,22.5857864 Z" id="close-icon"></path>
+                                    </g>
+                                    </g>
                                 </g>
                                 </g>
-                            </g>
-                            </g>
-                        </svg>
-                </button>
+                            </svg>
+                    </button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="modal-content">
-                <form>
-                    <div class="form-group">
-                        <label for="call-link" class="text-bold">Copy Call Id*</label>
-                        <input id="call-link" type="text" class="form-control" #callInvite />
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-danger text-white"
-                            (click)="copyToClipBoard(callInviteEl.nativeElement)">
-                            Copy Id
-                        </button>
-                    </div>
-
-                    <ng-container *ngIf="!isAppMode()">
-                        <!-- Only show on Web platform -->
+                <div class="modal-content">
+                    <form>
                         <div class="form-group">
-                            <label for="call-link" class="text-bold">Copy Call Link*</label>
-                            <input id="call-link" type="text" class="form-control" #callUrlInvite />
+                            <label for="call-link" class="text-bold">Copy Call Id*</label>
+                            <input id="call-link" type="text" class="form-control" #callInvite />
                         </div>
                         <div class="form-group">
-                            <button type="button" class="btn btn-danger text-white" 
-                                (click)="copyToClipBoard(callUrlInviteEl.nativeElement)">
-                                Copy Link
+                            <button type="button" class="btn btn-danger text-white"
+                                (click)="copyToClipBoard(callInviteEl.nativeElement)">
+                                Copy Id
                             </button>
                         </div>
-                    </ng-container>
-                </form>
+
+                        <ng-container *ngIf="!isAppMode()">
+                            <!-- Only show on Web platform -->
+                            <div class="form-group">
+                                <label for="call-link" class="text-bold">Copy Call Link*</label>
+                                <input id="call-link" type="text" class="form-control" #callUrlInvite />
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-danger text-white" 
+                                    (click)="copyToClipBoard(callUrlInviteEl.nativeElement)">
+                                    Copy Link
+                                </button>
+                            </div>
+                        </ng-container>
+                    </form>
+                </div>
             </div>
-        </div>
     </div>
 
     <main>
