@@ -25,13 +25,13 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('guestVideo', { read: ElementRef }) guestVideoEl: ElementRef;
   @ViewChild('callInvite', { read: ElementRef }) callInviteEl: ElementRef;
   @ViewChild('callUrlInvite', { read: ElementRef }) callUrlInviteEl: ElementRef;
+  private pc: RTCPeerConnection;
   private servers;
-  private pc;
-  private localStream;
-  private remoteStream
-  isMuted = true;
-  isBlinded = true;
-  firestore = firebase.firestore();
+  private localStream: MediaStream;
+  private remoteStream: MediaStream;
+  private firestore = firebase.firestore();
+  isMuted: boolean = true;
+  isBlinded: boolean = true;
   callInviteId: string;
 
   constructor(
@@ -44,7 +44,10 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
     this.servers = {
       iceServers: [
         {
-          urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
+          urls: [
+            'stun:stun1.l.google.com:19302', 
+            'stun:stun2.l.google.com:19302'
+          ],
         },
       ],
       iceCandidatePoolSize: 10,
@@ -58,7 +61,6 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
     await this.initLocalStream();
     const { snapshot: { queryParams: { callId } } } = this.activatedRoute;
     if (callId) {
-      this.callInviteId = callId;
       await this.initAnswerSession(callId);
     } else {
       await this.initCallSession();
@@ -87,18 +89,17 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
 
     this.pc.oniceconnectionstatechange = async (event) => {
       if(this.pc.iceConnectionState === 'disconnected') {
-          console.log('Disconnected');
-          this._ngZone.run(() => {
-            setTimeout(async () => {
-              // wait for 5 seconds then end call
+        setTimeout(() => {
+            this._ngZone.run(async () => {
+              // wait for 5 seconds then drop call
               await this.endCall('Alert', 'Call was dropped');
-            }, 5000);
-          });
+            });
+          }, 5000);
       }
       if (this.pc.iceConnectionState === 'connected') {
-        console.log('Connected');
         // await this.initLocalStream();
       }
+      console.log({ connectionStatus: this.pc.iceConnectionState  });
     }
   }
 
@@ -149,6 +150,7 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private async initAnswerSession(callId: string): Promise<void> {
+    this.callInviteId = callId;
     const callDoc = this.firestore.collection('calls').doc(callId);
     const answerCandidates = callDoc.collection('answerCandidates');
     const offerCandidates = callDoc.collection('offerCandidates');
@@ -176,7 +178,6 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
 
     offerCandidates.onSnapshot((snapshot) => {
       snapshot.docChanges().forEach((change) => {
-        console.log(change);
         if (change.type === 'added') {
           let data = change.doc.data();
           this.pc.addIceCandidate(new RTCIceCandidate(data));
