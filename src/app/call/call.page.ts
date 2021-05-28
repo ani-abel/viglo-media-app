@@ -96,7 +96,7 @@ export class CallPage implements OnInit, AfterViewInit, OnDestroy {
             });
           }, 5000);
       }
-      if (this.pc.iceConnectionState === 'connected') {
+      if (this.pc.iceConnectionState === 'connected') { 
         // await this.initLocalStream();
       }
       console.log({ connectionStatus: this.pc.iceConnectionState  });

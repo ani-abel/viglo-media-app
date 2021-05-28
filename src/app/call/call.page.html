@@ -115,18 +115,19 @@
                     <i class="fa fa-envelope-open-o"></i>
                 </button>
             </div>
-            <div class="button control text-right">
-                
-                <button class="btn-rounded btn-primary text-white text-center cursor-pointer tooltip"
-                    (click)="onEndCall()"
-                    [ngClass]="{ 'btn-disabled': callInviteId }">
-                    <span class="tooltiptext">
-                        <i class="fa fa-power-off"></i>&nbsp;
-                        End Call
-                    </span>
-                    <i class="fa fa-power-off"></i>
-                </button>
-            </div>
+            <ng-container *ngIf="!callInviteId">
+                <div class="button control text-right">   
+                    <button class="btn-rounded btn-primary text-white text-center cursor-pointer tooltip"
+                        (click)="onEndCall()"
+                        [ngClass]="{ 'btn-disabled': callInviteId }">
+                        <span class="tooltiptext">
+                            <i class="fa fa-power-off"></i>&nbsp;
+                            End Call
+                        </span>
+                        <i class="fa fa-power-off"></i>
+                    </button>
+                </div>
+            </ng-container>
         </footer>
     </main>
 </ion-content>
